@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Surprise - Beauty's Birthday</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        .surprise-container {
+            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid var(--pink);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+        }
+
+        .surprise-box {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            perspective: 1000px;
+        }
+
+        .surprise-box:hover {
+            transform: scale(1.1);
+        }
+
+        .box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .box-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border: 4px solid var(--pink);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .box-front {
+            background: linear-gradient(135deg, #FF69B4, #FF1493);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box-top {
+            background: linear-gradient(135deg, #FF1493, #FF69B4);
+            transform: rotateX(90deg) translateZ(100px);
+        }
+
+        .box-right {
+            background: linear-gradient(135deg, #FF69B4, #FF1493);
+            transform: rotateY(90deg) translateZ(100px);
+        }
+
+        .box-left {
+            background: linear-gradient(135deg, #FF1493, #FF69B4);
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+
+        .box-back {
+            background: linear-gradient(135deg, #FF69B4, #FF1493);
+            transform: rotateY(180deg) translateZ(100px);
+        }
+
+        .box-bottom {
+            background: linear-gradient(135deg, #FF1493, #FF69B4);
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        .ribbon {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .ribbon::before,
+        .ribbon::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 100px;
+            background: var(--turquoise);
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
+        }
+
+        .ribbon::before {
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            top: -20px;
+        }
+
+        .ribbon::after {
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            top: -20px;
+        }
+
+        .bow {
+            position: absolute;
+            width: 60px;
+            height: 30px;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .bow::before,
+        .bow::after {
+            content: '';
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background: var(--turquoise);
+            border-radius: 60% 60% 60% 60% / 80% 80% 40% 40%;
+            box-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
+        }
+
+        .bow::before {
+            left: 0;
+            top: 0;
+            transform: rotate(-25deg);
+        }
+
+        .bow::after {
+            right: 0;
+            top: 0;
+            transform: rotate(25deg);
+        }
+
+        .bow-center {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: var(--turquoise);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
+            z-index: 3;
+        }
+
+        .gift-icon {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .surprise-box:hover .box {
+            transform: rotateY(180deg);
+        }
+
+        .ice-cream {
+            position: relative;
+            width: 150px;
+            height: 250px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .ice-cream.active {
+            display: block;
+            animation: bounce 1s ease infinite;
+        }
+
+        .cone {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 120px solid #D2691E;
+            filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        .cone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75px;
+            width: 150px;
+            height: 120px;
+            background: repeating-linear-gradient(
+                45deg,
+                #D2691E,
+                #D2691E 10px,
+                #CD853F 10px,
+                #CD853F 20px
+            );
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .scoop {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        .scoop::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 30% 30%,
+                rgba(255, 255, 255, 0.4) 0%,
+                rgba(255, 255, 255, 0.1) 20%,
+                transparent 60%
+            );
+        }
+
+        .scoop-1 {
+            background: linear-gradient(135deg, #FFB6C1, #FF69B4);
+            bottom: 100px;
+            animation: rotate 3s linear infinite;
+        }
+
+        .scoop-1::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 70% 70%,
+                rgba(255, 255, 255, 0.3) 0%,
+                transparent 50%
+            );
+        }
+
+        .scoop-2 {
+            background: linear-gradient(135deg, #87CEEB, #4682B4);
+            bottom: 150px;
+            animation: rotate 3s linear infinite reverse;
+        }
+
+        .scoop-2::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 70% 70%,
+                rgba(255, 255, 255, 0.3) 0%,
+                transparent 50%
+            );
+        }
+
+        .scoop-3 {
+            background: linear-gradient(135deg, #9370DB, #8A2BE2);
+            bottom: 200px;
+            animation: rotate 3s linear infinite;
+        }
+
+        .scoop-3::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 70% 70%,
+                rgba(255, 255, 255, 0.3) 0%,
+                transparent 50%
+            );
+        }
+
+        .sprinkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .sprinkle {
+            position: absolute;
+            width: 4px;
+            height: 15px;
+            background: #FFD700;
+            border-radius: 2px;
+            filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.2));
+        }
+
+        .sprinkle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.4) 0%,
+                transparent 100%
+            );
+            border-radius: 2px;
+        }
+
+        .drip {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: currentColor;
+            border-radius: 10px 10px 0 0;
+            transform-origin: top;
+            animation: drip 3s ease-in-out infinite;
+        }
+
+        .drip-1 {
+            left: 30%;
+            top: 180px;
+            color: #FF69B4;
+            transform: rotate(-15deg);
+            animation-delay: 0s;
+        }
+
+        .drip-2 {
+            left: 50%;
+            top: 180px;
+            color: #4682B4;
+            transform: rotate(0deg);
+            animation-delay: 0.5s;
+        }
+
+        .drip-3 {
+            left: 70%;
+            top: 180px;
+            color: #8A2BE2;
+            transform: rotate(15deg);
+            animation-delay: 1s;
+        }
+
+        @keyframes drip {
+            0%, 100% { transform: scaleY(1) rotate(var(--rotation)); }
+            50% { transform: scaleY(1.2) rotate(var(--rotation)); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotate {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        .message {
+            font-size: 1.5rem;
+            color: var(--white);
+            margin: 2rem 0;
+            line-height: 1.6;
+        }
+
+        .ice-cream-message {
+            font-size: 2rem;
+            color: var(--white);
+            margin: 2rem 0;
+            line-height: 1.6;
+            font-family: 'Pacifico', cursive;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .ice-cream-message.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ice-cream-message span {
+            display: inline-block;
+            animation: wave 1s ease infinite;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .social-share {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .share-btn {
+            background: var(--turquoise);
+            color: var(--navy-blue);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="music.html" class="nav-link">Music</a>
+        <a href="surprise.html" class="nav-link active">Surprise</a>
+    </nav>
+
+    <div class="container">
+        <h1 class="animate__animated animate__fadeIn">A Special Surprise for You!</h1>
+
+        <div class="surprise-container animate__animated animate__fadeIn">
+            <div class="surprise-box" onclick="revealSurprise()">
+                <div class="box">
+                    <div class="box-face box-front">
+                        <span class="gift-icon">🎁</span>
+                    </div>
+                    <div class="box-face box-top"></div>
+                    <div class="box-face box-right"></div>
+                    <div class="box-face box-left"></div>
+                    <div class="box-face box-back"></div>
+                    <div class="box-face box-bottom"></div>
+                </div>
+                <div class="ribbon">
+                    <div class="bow">
+                        <div class="bow-center"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message">
+                Click the gift box to reveal your special surprise! 🎁
+            </div>
+
+            <div class="ice-cream-message" id="ice-cream-message">
+                <span style="--i:1">H</span>
+                <span style="--i:2">e</span>
+                <span style="--i:3">r</span>
+                <span style="--i:4">e</span>
+                <span style="--i:5">'</span>
+                <span style="--i:6">s</span>
+                <span style="--i:7"> </span>
+                <span style="--i:8">y</span>
+                <span style="--i:9">o</span>
+                <span style="--i:10">u</span>
+                <span style="--i:11">r</span>
+                <span style="--i:12"> </span>
+                <span style="--i:13">i</span>
+                <span style="--i:14">c</span>
+                <span style="--i:15">e</span>
+                <span style="--i:16"> </span>
+                <span style="--i:17">c</span>
+                <span style="--i:18">r</span>
+                <span style="--i:19">e</span>
+                <span style="--i:20">a</span>
+                <span style="--i:21">m</span>
+                <span style="--i:22">!</span>
+                <span style="--i:23"> 🍦</span>
+            </div>
+
+            <div class="ice-cream" id="ice-cream">
+                <div class="cone"></div>
+                <div class="scoop scoop-1"></div>
+                <div class="scoop scoop-2"></div>
+                <div class="scoop scoop-3"></div>
+                <div class="drip drip-1"></div>
+                <div class="drip drip-2"></div>
+                <div class="drip drip-3"></div>
+                <div class="sprinkles" id="sprinkles"></div>
+            </div>
+
+            <div class="social-share">
+                <button onclick="shareOnWhatsApp()" class="share-btn">Share on WhatsApp</button>
+                <button onclick="shareOnInstagram()" class="share-btn">Share on Instagram</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-elements">
+        <div class="balloon balloon-1"></div>
+        <div class="balloon balloon-2"></div>
+        <div class="balloon balloon-3"></div>
+        <div class="balloon balloon-4"></div>
+        <div class="balloon balloon-5"></div>
+        <div class="balloon balloon-6"></div>
+        <div class="flower flower-1"></div>
+        <div class="flower flower-2"></div>
+        <div class="flower flower-3"></div>
+        <div class="flower flower-4"></div>
+        <div class="flower flower-5"></div>
+        <div class="flower flower-6"></div>
+    </div>
+
+    <script>
+        function revealSurprise() {
+            const iceCream = document.getElementById('ice-cream');
+            const message = document.getElementById('ice-cream-message');
+            iceCream.classList.add('active');
+            setTimeout(() => {
+                message.classList.add('active');
+            }, 500);
+            createSprinkles();
+            startConfetti();
+        }
+
+        function createSprinkles() {
+            const sprinklesContainer = document.getElementById('sprinkles');
+            const colors = ['#FFD700', '#FF69B4', '#87CEEB', '#9370DB', '#FF6347'];
+            
+            for (let i = 0; i < 20; i++) {
+                const sprinkle = document.createElement('div');
+                sprinkle.className = 'sprinkle';
+                sprinkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                sprinkle.style.left = Math.random() * 100 + '%';
+                sprinkle.style.top = Math.random() * 100 + '%';
+                sprinkle.style.transform = `rotate(${Math.random() * 360}deg)`;
+                sprinklesContainer.appendChild(sprinkle);
+            }
+        }
+
+        function startConfetti() {
+            const duration = 15 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                confetti({
+                    ...defaults,
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: ['#87CEEB', '#000080', '#40E0D0', '#ADD8E6', '#FF69B4', '#9370DB']
+                });
+                confetti({
+                    ...defaults,
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: ['#87CEEB', '#000080', '#40E0D0', '#ADD8E6', '#FF69B4', '#9370DB']
+                });
+            }, 250);
+        }
+
+        function shareOnWhatsApp() {
+            const text = "Check out Beauty's birthday surprise! 🎂";
+            const url = window.location.href;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`);
+        }
+
+        function shareOnInstagram() {
+            alert('Take a screenshot and share it on Instagram! 📸');
+        }
+    </script>
+</body>
+</html> 

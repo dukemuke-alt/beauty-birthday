@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memories - Beauty's Birthday</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 3px solid var(--turquoise);
+            box-shadow: 0 0 20px rgba(64, 224, 208, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="gallery.html" class="nav-link active">Gallery</a>
+        <a href="music.html" class="nav-link">Music</a>
+        <a href="surprise.html" class="nav-link">Surprise</a>
+    </nav>
+
+    <div class="container">
+        <h1 class="animate__animated animate__fadeIn">Our Beautiful Memories</h1>
+        <div class="gallery-grid">
+            <div class="gallery-item animate__animated animate__fadeIn">
+                <img src="IMG_E0370.jpg" alt="Memory 1">
+                <div class="gallery-caption">Our first photo together 💙</div>
+            </div>
+            <div class="gallery-item animate__animated animate__fadeIn">
+                <img src="IMG_1320.PNG" alt="Memory 2">
+                <div class="gallery-caption"></div>
+            </div>
+            <div class="gallery-item animate__animated animate__fadeIn">
+                <img src="PBBG7422.JPG" alt="Memory 3">
+                <div class="gallery-caption"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-elements">
+        <div class="balloon balloon-1"></div>
+        <div class="balloon balloon-2"></div>
+        <div class="balloon balloon-3"></div>
+        <div class="balloon balloon-4"></div>
+        <div class="balloon balloon-5"></div>
+        <div class="balloon balloon-6"></div>
+        <div class="flower flower-1"></div>
+        <div class="flower flower-2"></div>
+        <div class="flower flower-3"></div>
+        <div class="flower flower-4"></div>
+        <div class="flower flower-5"></div>
+        <div class="flower flower-6"></div>
+    </div>
+</body>
+</html> 

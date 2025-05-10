@@ -1,0 +1,564 @@
+:root {
+    --sky-blue: #87CEEB;
+    --navy-blue: #000080;
+    --turquoise: #40E0D0;
+    --light-blue: #ADD8E6;
+    --pink: #FF69B4;
+    --purple: #9370DB;
+    --yellow: #FFD700;
+    --white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, var(--sky-blue), var(--navy-blue), var(--purple));
+    color: var(--white);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('meadow-bg.jpg') center/cover no-repeat;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    z-index: 1000;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: var(--turquoise);
+    color: var(--navy-blue);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3.5rem;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1rem;
+}
+
+.welcome-message {
+    font-size: 1.5rem;
+    color: var(--light-blue);
+}
+
+.countdown-section {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 15px;
+    min-width: 120px;
+    backdrop-filter: blur(5px);
+    border: 2px solid var(--turquoise);
+    box-shadow: 0 0 20px rgba(64, 224, 208, 0.3);
+}
+
+.countdown-item span {
+    display: block;
+}
+
+.countdown-item span:first-child {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--white);
+}
+
+.countdown-item .label {
+    font-size: 1rem;
+    color: var(--light-blue);
+}
+
+.shayari-section {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.shayari-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid var(--pink);
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+}
+
+.shayari-text {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: var(--white);
+}
+
+.gallery-section {
+    margin: 3rem 0;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    border: 3px solid var(--light-blue);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.guestbook-section {
+    margin: 3rem 0;
+}
+
+#guestbook-form {
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid var(--light-blue);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    font-family: 'Quicksand', sans-serif;
+}
+
+textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background: var(--turquoise);
+    color: var(--navy-blue);
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+}
+
+.music-section {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.playlist-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+audio {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.interactive-section {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.surprise-btn {
+    background: var(--navy-blue);
+    color: var(--white);
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.surprise-btn:hover {
+    transform: scale(1.05);
+}
+
+.social-share {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-btn {
+    background: var(--sky-blue);
+    color: var(--navy-blue);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.share-btn:hover {
+    transform: translateY(-3px);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background: var(--white);
+    margin: 15% auto;
+    padding: 2rem;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 15px;
+    color: var(--navy-blue);
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Floating Elements */
+.floating-elements {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+/* Balloon Styles */
+.balloon {
+    position: absolute;
+    width: 40px;
+    height: 60px;
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.balloon::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.7);
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.balloon-1 {
+    background: linear-gradient(135deg, #87CEEB, #4682B4);
+    left: 5%;
+    top: 5%;
+    animation-delay: 0s;
+}
+
+.balloon-2 {
+    background: linear-gradient(135deg, #FF69B4, #FF1493);
+    left: 15%;
+    top: 3%;
+    animation-delay: 2s;
+}
+
+.balloon-3 {
+    background: linear-gradient(135deg, #9370DB, #8A2BE2);
+    left: 25%;
+    top: 6%;
+    animation-delay: 4s;
+}
+
+.balloon-4 {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    right: 5%;
+    top: 4%;
+    animation-delay: 1s;
+}
+
+.balloon-5 {
+    background: linear-gradient(135deg, #98FB98, #32CD32);
+    right: 15%;
+    top: 7%;
+    animation-delay: 3s;
+}
+
+.balloon-6 {
+    background: linear-gradient(135deg, #FFA07A, #FF6347);
+    right: 25%;
+    top: 5%;
+    animation-delay: 5s;
+}
+
+/* Flower Styles */
+.flower {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    animation: float 8s ease-in-out infinite;
+}
+
+.flower::before,
+.flower::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+.flower::before {
+    transform: rotate(45deg);
+}
+
+.flower::after {
+    transform: rotate(-45deg);
+}
+
+.flower-1 {
+    left: 5%;
+    top: 20%;
+    animation-delay: 1s;
+}
+
+.flower-1::before,
+.flower-1::after {
+    background: #87CEEB;
+}
+
+.flower-2 {
+    left: 12%;
+    top: 35%;
+    animation-delay: 3s;
+}
+
+.flower-2::before,
+.flower-2::after {
+    background: #FF69B4;
+}
+
+.flower-3 {
+    left: 20%;
+    top: 50%;
+    animation-delay: 5s;
+}
+
+.flower-3::before,
+.flower-3::after {
+    background: #9370DB;
+}
+
+.flower-4 {
+    right: 5%;
+    top: 25%;
+    animation-delay: 2s;
+}
+
+.flower-4::before,
+.flower-4::after {
+    background: #FFD700;
+}
+
+.flower-5 {
+    right: 12%;
+    top: 40%;
+    animation-delay: 4s;
+}
+
+.flower-5::before,
+.flower-5::after {
+    background: #FFFFFF;
+}
+
+.flower-6 {
+    right: 20%;
+    top: 55%;
+    animation-delay: 6s;
+}
+
+.flower-6::before,
+.flower-6::after {
+    background: #FF6347;
+}
+
+/* Enhanced Animations */
+@keyframes float {
+    0% { 
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    50% { 
+        transform: translateY(-15px) rotate(5deg) scale(1.05);
+    }
+    100% { 
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+@keyframes sway {
+    0% { transform: translateX(0) rotate(0deg); }
+    50% { transform: translateX(20px) rotate(5deg); }
+    100% { transform: translateX(0) rotate(0deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Add these classes to your HTML elements */
+.spinning {
+    animation: spin 10s linear infinite;
+}
+
+.swaying {
+    animation: sway 4s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .welcome-message {
+        font-size: 1.2rem;
+    }
+
+    .countdown-item {
+        min-width: 100px;
+        padding: 1rem;
+    }
+
+    .countdown-item span:first-child {
+        font-size: 2rem;
+    }
+
+    .shayari-text {
+        font-size: 1.2rem;
+    }
+
+    .main-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .gallery-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .social-share {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Ice Cream Animation */
+.ice-cream {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* Flower Petals Animation */
+.petal {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    pointer-events: none;
+    z-index: 99;
+} 
